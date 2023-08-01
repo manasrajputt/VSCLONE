@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VS Code</title>
+    <link rel='stylesheet' href='../stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="main">
+      <div id="popup">
+        <div id="popupcard">
+          <h3>Change Name</h3>
+          <hr>
+          <form action="" method="post">
+            <input name="newname" id="inp" type="text">
+            <input id="submit" type="submit">
+          </form>
+        </div>
+      </div>
+      <div id="top">
+        <div id="top1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Visual_Studio_Code_1.35_icon.png" alt="">
+          <h6>File</h6>
+          <h6>Edit</h6>
+          <h6>Selection</h6>
+          <h6>View</h6>
+          <h6>Go</h6>
+          <h6>Run</h6>
+          <h6>Terminal</h6>
+          <h6>Help</h6>
+        </div>
+        <div id="top2">
+          <img src="../images/minus.png" alt="">
+          <img src="./images/squares.png" alt="">
+          <img src="./images/x.png" alt="">
+        </div>
+      </div>
+      <div id="bottom">
+        <div id="left">
+          <div id="wrapper-left">
+            <i id="Explorer" class="ri-file-3-line"></i>
+            <i class="ri-search-line"></i>
+            <i class="ri-git-branch-line"></i>
+            <i class="ri-bug-line"></i>
+          </div>
+          <div id="wrapper-right">
+            <div id="filldets">
+              <h1>Folder Name</h1>
+              <div id="icons">
+                <i id="fileicon" class="ri-add-line"></i>
+                <i id="foldericon" class="ri-folder-fill"></i>
+                <a href="/back"><i id="refresh" class="ri-refresh-line"></i></a>
+              </div>
+            </div> 
+            <div id="files">
+              <form action="/createfile" id="fileform">
+                <input type="text" name="filename" placeholder="Filename">
+              </form>
+              <form action="/createfolder" id="folderform">
+                <input type="text" name="foldername" placeholder="Foldername">
+              </form>
+              <% files.forEach(function (item){ %>
+                <div class="elem">
+                  <div id="eleleft">
+                    <% if(item.isDirectory()) { %>
+                      <i class="ri-folder-3-line"></i>
+                      <%= item.name %>
+                    <% } else { %>
+                      <a href="/file/<%= item.name %>">
+                        <i class="ri-file-3-line"></i>
+                        <%= item.name %>
+                      </a>
+                    <% } %>
+                  </div>  
+                  <div id="eleright">
+                    <i id="edit" class="ri-pencil-fill"></i>
+                    <% if(item.isDirectory()) { %>
+                      <a href="/delete/folder/<%= item.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                    <% } else { %>
+                      <a href="/delete/file/<%= item.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                    <% } %>
+                  </div>
+                </div>
+              <% }) %>
+            </div> 
+          </div>  
+        </div>
+        <div id="right">
+          <h6>no files here.</h6>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      function bothformoff(){
+        document.querySelectorAll("#files form").forEach( function (item){
+          item.style.display="none";
+        })
+      }
+
+      document.querySelector("#files").addEventListener('click',function(dets){
+        if(dets.target.id === "edit"){
+          var val=dets.srcElement.parentElement.parentElement.textContent.trim()
+          document.querySelector("#inp").value = val;
+          document.querySelector("#popup").style.display = "flex";
+          document.querySelector("#popupcard form").action =`/updatename/${val}`;
+        }
+      })
+
+      var flag1=true;
+      document.querySelector("#fileicon").addEventListener('click',function(){
+        bothformoff();
+        if(flag1){
+        document.querySelector("#fileform").style.display="block";
+        flag1=false;
+        }
+        else {
+          document.querySelector("#fileform").style.display="none";
+          flag1=true;
+        }
+      });
+
+      
+      var flag2=true;
+      document.querySelector("#foldericon").addEventListener('click',function(){
+        bothformoff();
+        if(flag2){
+          document.querySelector("#folderform").style.display="block";
+        flag2=false;
+      }
+      else {
+          document.querySelector("#folderform").style.display="none";
+          flag2=true;
+        }
+      });
+
+      var flag3=true;
+      document.querySelector("#Explorer").addEventListener("click",function(){
+        if(flag3)
+        {       
+          document.querySelector("#wrapper-right").style.display="none";
+          flag3=false
+        }        
+        else{
+          document.querySelector("#wrapper-right").style.display="initial";
+          flag3=true;
+        }
+      })
+      
+      </script>
+  </body>
+</html>

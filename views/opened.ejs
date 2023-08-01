@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>VS Code</title>
+    <link rel='stylesheet' href='../stylesheets/style.css' />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+  </head>
+  <body>
+    <div id="main">
+      <div id="top">
+        <div id="top1">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1c/Visual_Studio_Code_1.35_icon.png" alt="">
+          <h6>File</h6>
+          <h6>Edit</h6>
+          <h6>Selection</h6>
+          <h6>View</h6>
+          <h6>Go</h6>
+          <h6>Run</h6>
+          <h6>Terminal</h6>
+          <h6>Help</h6>
+        </div>
+        <div id="top2">
+          <img src="../images/minus.png" alt="">
+          <img src="../images/squares.png" alt="">
+          <img src="../images/x.png" alt="">
+        </div>
+      </div>
+      <div id="bottom">
+        <div id="left">
+          <div id="wrapper-left">
+            <i class="ri-file-3-line"></i>
+            <i class="ri-search-line"></i>
+            <i class="ri-git-branch-line"></i>
+            <i class="ri-bug-line"></i>
+          </div>
+          <div id="wrapper-right">
+            <div id="filldets">
+              <h1>Folder Name</h1>
+              <div id="icons">
+                <i id="fileicon" class="ri-add-line"></i>
+                <i id="foldericon" class="ri-folder-fill"></i>
+                <a href="/back"><i id="refresh" class="ri-refresh-line"></i></a>
+              </div>
+            </div> 
+            <div id="files">
+              <form action="/createfile" id="fileform">
+                <input type="text" name="filename" placeholder="Filename">
+              </form>
+              <form action="/createfolder" id="folderform">
+                <input type="text" name="foldername" placeholder="Foldername">
+              </form>
+              <% files.forEach(function (item){ %>
+                <div class="elem">
+                  <div id="eleleft">
+                    <% if(item.isDirectory()) { %>
+                        <i class="ri-folder-3-line"></i>
+                        <%= item.name %>
+                    <% } else { %>
+                        <a href="/file/<%= item.name %>">
+                          <i class="ri-file-3-line"></i>
+                          <%= item.name %>
+                        </a>
+                    <% } %>
+                  </div>  
+                    <div id="eleright">
+                        <% if(item.isDirectory()) { %>
+                        <i class="ri-pencil-fill"></i>
+                        <a href="/delete/folder/<%= item.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                        <% } else { %>
+                        <i class="ri-pencil-fill"></i>
+                        <a href="/delete/file/<%= item.name %>"><i class="ri-delete-bin-7-line"></i></a>
+                        <% } %>
+                    </div>
+                </div>
+              <% }) %>
+            </div> 
+          </div>  
+        </div>
+        <div id="right">
+          <div class="rnav">
+              <div class="file"><%= filename %><a href="/"><i class="ri-close-line"></i></a></div>
+          </div>
+            <form action="/update/<%= filename %>" method="post">
+                <textarea  name="inputdata" style="resize: none;"><%= data %></textarea>
+                <input id="submitbtn" type="submit" value="Save File">
+            </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+
+      function bothformoff(){
+        document.querySelectorAll("#files form").forEach( function (item){
+          item.style.display="none";
+        })
+      }
+
+      var flag1=true;
+      document.querySelector("#fileicon").addEventListener('click',function(){
+        bothformoff();
+        if(flag1){
+        document.querySelector("#fileform").style.display="block";
+        flag1=false;
+        }
+        else {
+          document.querySelector("#fileform").style.display="none";
+          flag1=true;
+        }
+      });
+
+      var flag2=true;
+      document.querySelector("#foldericon").addEventListener('click',function(){
+        bothformoff();
+        if(flag2){
+        document.querySelector("#folderform").style.display="block";
+        flag2=false;
+        }
+        else {
+          document.querySelector("#folderform").style.display="none";
+          flag2=true;
+        }
+      });
+        
+    </script>
+  </body>
+</html>
