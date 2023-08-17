@@ -12,3 +12,5 @@ Features :
 
 => Rename File and Folder from UI. ✅
 
+![VSCLONE](https://github.com/manasrajputt/VSCLONE/assets/105450483/02ae07b0-9b9f-4bb6-83f1-c9f68b2e0b8f)
+
